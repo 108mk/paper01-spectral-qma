@@ -1,0 +1,195 @@
+\usepackage{thmtools,thm-restate}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{definition}{Definition}[section]
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{propo}{Proposition}[section]
+\newtheorem{coro}{Corollary}[section]
+\newtheorem{prob}{Problem}[section]
+\newtheorem{hyp}{Hypothesis}[section]
+\newtheorem{asmp}{Assumption}[section]
+\newtheorem{conj}{Conjecture}[section]
+\newtheorem{claim}{Claim}[section]
+\newtheorem{fact}{Fact}[section]
+
+%https://tex.stackexchange.com/questions/422/how-do-i-repeat-a-theorem-number
+\begin{comment}
+    \makeatletter
+\newtheorem*{rep@theorem}{\rep@title}
+\newcommand{\newreptheorem}[2]{%
+\newenvironment{rep#1}[1]{%
+ \def\rep@title{#2 \ref{##1}}%
+ \begin{rep@theorem}}%
+ {\end{rep@theorem}}}
+\makeatother
+\end{comment}
+
+\newtheorem{subdefinition}{Definition}[definition]
+\renewcommand{\thesubdefinition}{\thedefinition\alph{subdefinition}}
+
+\newtheorem{innercustomthm}{Theorem}
+\newenvironment{customthm}[1]
+  {\renewcommand\theinnercustomthm{#1}\innercustomthm}
+  {\endinnercustomthm}
+
+\newtheorem{innercustomdef}{Definition}
+\newenvironment{customdef}[1]
+  {\renewcommand\theinnercustomdef{#1}\innercustomdef}
+  {\endinnercustomdef}
+
+\newtheorem{innercustomcor}{Corollary}
+\newenvironment{customcor}[1]
+  {\renewcommand\theinnercustomcor{#1}\innercustomcor}
+  {\endinnercustomcor}
+
+\newtheorem{innercustomconj}{Conjecture}
+\newenvironment{customconj}[1]
+  {\renewcommand\theinnercustomconj{#1}\innercustomconj}
+  {\endinnercustomconj}
+
+
+
+\theoremstyle{definition}
+\newtheorem{example}{Example}[section]
+\newtheorem{remark}{Remark}[section]
+
+\newcommand{\jordi}[1]{{\bf\color{red}Jordi: [#1]}}
+\newcommand{\marten}[1]{{\bf\color{blue}Marten: [#1]}}
+\newcommand{\chris}[1]{{\bf\color{orange}Chris: [#1]}}
+\newcommand{\com}[1]{{\bf\color{purple}Comment: [#1]}}
+\newcommand{\newtxt}[1]{{\bf\color{purple}New text: [#1]}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%% Bra-Ket notation %%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\si}{\ket{\psi}}
+\newcommand{\fii}{\ket{\phi}}
+\newcommand{\zii}{\ket{\textbf{z}}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%% BF MATH %%%%%%%%%%%%%%%%%%%%
+\newcommand{\xx}{\mathbf{x}}
+\newcommand{\yy}{\mathbf{y}}
+\newcommand{\zz}{\mathbf{z}}
+\newcommand{\vv}{\mathbf{v}}
+\newcommand{\uu}{\mathbf{u}}
+\newcommand{\mm}{\mathbf{m}}
+\newcommand{\kk}{\mathbf{k}}
+\newcommand{\cc}{\mathbf{c}}
+\renewcommand{\S}{\mathbf{S}}
+\newcommand{\bb}{\mathbf{b}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%% MATH-CAL %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\mA}{\mathcal{A}} 
+\newcommand{\mC}{\mathcal{C}} 
+\newcommand{\mH}{\mathcal{H}}
+\newcommand{\mO}{\mathcal{O}}
+\newcommand{\mW}{\mathcal{W}}
+\newcommand{\mN}{\mathcal{N}}
+\newcommand{\mS}{\mathcal{S}}
+\newcommand{\cS}{\mS}
+\newcommand{\LL}{\mathcal{L}}
+\newcommand{\OO}{\mathcal{O}}
+\renewcommand{\AA}{\mathcal{A}}
+\newcommand{\MM}{\mathcal{M}}
+\newcommand{\HH}{\mathcal{H}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%% MATHBB %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% BB MATH %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%% MATH-SF %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%% COMPLEXITY CLASSES %%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\P}{\mathsf{P}}
+\newcommand{\NC}{\mathsf{NC}}
+\newcommand{\QNC}{\mathsf{QNC}}
+\newcommand{\BQNC}{\mathsf{BQNC}}
+\newcommand{\Pclass}{\mathsf{P}}
+\newcommand{\RP}{\mathsf{RP}}
+\newcommand{\BPP}{\mathsf{BPP}}
+\newcommand{\BQP}{\mathsf{BQP}}
+\newcommand{\NP}{\mathsf{NP}}
+\newcommand{\NqP}{\mathsf{NqP}}
+\newcommand{\MA}{\mathsf{MA}}
+\newcommand{\AM}{\mathsf{AM}}
+\newcommand{\UMA}{\mathsf{UMA}}
+\newcommand{\QMA}{\mathsf{QMA}}
+\newcommand{\bQMA}{\mathsf{$\beta$QMA}}
+\newcommand{\UQMA}{\mathsf{UQMA}}
+\newcommand{\QCMA}{\mathsf{QCMA}}
+\newcommand{\bQCMA}{\mathsf{$\beta$QCMA}}
+\newcommand{\UQCMA}{\mathsf{UQCMA}}
+\newcommand{\PCP}{\mathsf{PCP}}
+\newcommand{\PSPACE}{\mathsf{PSPACE}}
+\newcommand{\QPCP}{\mathsf{QPCP}}
+\newcommand{\QCPCP}{\mathsf{QCPCP}}
+\newcommand{\SPCP}{\mathsf{SPCP}}
+\newcommand{\PH}{\mathsf{PH}}
+\renewcommand{\BQP}{\mathsf{BQP}}
+\newcommand{\PBQP}{\mathsf{PreciseBQP}}
+\newcommand{\StoqMA}{\mathsf{StoqMA}}
+
+%%%%%%%%%%%%%%%%%%%%%%%% TURING MACHINE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\TM}{\mathsf{TM}}
+\newcommand{\QTM}{\mathsf{QTM}}
+\newcommand{\NTM}{\mathsf{NTM}}
+\newcommand{\QNTM}{\mathsf{QNTM}}
+
+%%%%%%%%%%%%%%% LOCAL HAMILTONIAN %%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\LH}{\mathsf{LH}}
+\newcommand{\FH}{\mathsf{FH}}
+\newcommand{\SAT}{\mathsf{SAT}}
+\newcommand{\QFT}{\mathsf{QFT}}
+\newcommand{\QPE}{\mathsf{QPE}}
+\newcommand{\LHES}{\mathsf{LHES}}
+\newcommand{\hist}{\mathsf{hist}}
+\newcommand{\CC}{\mathsf{C}}
+\newcommand{\ILP}{\mathsf{ILP}}
+\newcommand{\GuLH}{\text{GuLH}}
+\newcommand{\UQA}{\mathsf{UQA}}
+\newcommand{\GLH}{\mathsf{GLH}}
+\newcommand{\GLHgd}{\mathsf{GLH(k, $\gamma$, $\delta$)}}
+\newcommand{\GaLH}{\mathsf{GaLH}}
+\newcommand{\GaLHgd}{\mathsf{GaLH(k, $\gamma$, $\delta$)}}
+%%%%%%%%%%%%%%% Promise PROBLEM %%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\Yes}{\mathsf{Yes}}
+\newcommand{\No}{\mathsf{No}}
+\newcommand{\Input}{\mathsf{Input}}
+\newcommand{\Output}{\mathsf{Output}}
+\newcommand{\Promise}{\mathsf{Promise}}
+\newcommand{\Goal}{\mathsf{Goal}}
+\newcommand{\Proof}{\mathsf{Proof}}
+%%%%%%%%%%%% Functions %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\exp}{\mathsf{exp}}
+\renewcommand{\log}{\mathsf{log}}
+\newcommand{\poly}{\mathsf{poly}}
+\newcommand{\polylog}{\mathsf{polylog}}
+\newcommand{\logpn}{\mathsf{O(log^p n)} }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%% MATH FRACK %%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\fn}{\mathfrak{n}}
+\newcommand{\fC}{\mathfrak{C}}
+\newcommand{\expp}{\mathop{exp}}
+
+
+%\renewcommand{\Pr}{\textrm{Pr}}
+\renewcommand{\Tr}{\textrm{Tr}}
+
+\newcommand{\kb}[2]{|#1\rangle\langle#2|}
+\newcommand{\proj}[1]{|#1\rangle\langle#1|}
+\newcommand{\ot}{\otimes}
+
+\newcommand{\hatt}[1][]{\hat{t#1}}
+
