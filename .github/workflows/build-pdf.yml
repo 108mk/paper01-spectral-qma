@@ -1,0 +1,81 @@
+# Build PDF: compiles the paper with TeX Live on every push and publishes it to the `pdf`
+# branch, where GitHub's file viewer shows it:
+#   https://github.com/108mk/paper01-spectral-qma/blob/pdf/paper01-spectral-qma.pdf
+# The compile step runs build/build.sh, the same script used for local builds.
+# The pdf branch is recreated by each build of main as a single commit (PDF + README), so
+# clones stay small; any earlier PDF can be rebuilt from its commit on main.
+# Builds of other branches keep their PDF only as a run artifact (14 days).
+
+name: Build PDF
+
+on:
+  push:
+    branches-ignore: [pdf]
+    paths-ignore: ['**.md']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: build-pdf-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      PDF_NAME: paper01-spectral-qma.pdf
+      TEXLIVE_IMAGE: ghcr.io/xu-cheng/texlive-debian:latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Compile with TeX Live
+        run: docker run --rm -v "$GITHUB_WORKSPACE:/work" -w /work "$TEXLIVE_IMAGE" sh build/build.sh
+
+      - name: Report LaTeX errors and undefined references
+        if: always()
+        run: |
+          if [ ! -f main.log ]; then echo "::error::LaTeX did not run (no main.log)."; exit 0; fi
+          grep -E '^\./[^:]+:[0-9]+: ' main.log | sort -u | head -20 | while IFS= read -r l; do
+            f="${l%%:*}"; r="${l#*:}"; n="${r%%:*}"; m="${r#*: }"
+            echo "::error file=${f#./},line=${n}::${m}"
+          done
+          grep -E '^LaTeX Warning: (Reference|Citation) .* undefined' main.log | sort -u | head -10 | while IFS= read -r l; do
+            echo "::warning::${l#LaTeX Warning: }"
+          done
+
+      - name: Name the PDF
+        run: cp main.pdf "$PDF_NAME"
+
+      - name: Keep the PDF as a run artifact
+        uses: actions/upload-artifact@v7
+        with:
+          path: ${{ env.PDF_NAME }}
+          archive: false
+          retention-days: 14
+
+      - name: Publish to the pdf branch
+        if: github.ref == 'refs/heads/main'
+        env:
+          GIT_AUTHOR_NAME: github-actions[bot]
+          GIT_AUTHOR_EMAIL: 41898282+github-actions[bot]@users.noreply.github.com
+          GIT_COMMITTER_NAME: github-actions[bot]
+          GIT_COMMITTER_EMAIL: 41898282+github-actions[bot]@users.noreply.github.com
+        run: |
+          short="${GITHUB_SHA::7}"
+          subject="$(git log -1 --format=%s)"
+          repo="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY"
+          {
+            echo "# Latest PDF"
+            echo
+            echo "**[$PDF_NAME]($PDF_NAME)**, built $(TZ=Asia/Kolkata date '+%-d %b %Y, %H:%M IST') from [$short]($repo/commit/$GITHUB_SHA) on main: $subject"
+            echo
+            echo "This branch is rewritten by the [Build PDF]($repo/actions/workflows/build-pdf.yml) workflow after every push to main ([this run]($repo/actions/runs/$GITHUB_RUN_ID)). Do not commit to it."
+          } > "$RUNNER_TEMP/README.md"
+          pdf=$(git hash-object -w "$PDF_NAME")
+          readme=$(git hash-object -w "$RUNNER_TEMP/README.md")
+          tree=$(printf '100644 blob %s\t%s\n100644 blob %s\tREADME.md\n' "$pdf" "$PDF_NAME" "$readme" | git mktree)
+          commit=$(git commit-tree "$tree" -m "PDF of $short: $subject")
+          git push --force origin "$commit:refs/heads/pdf"
